@@ -1,0 +1,20 @@
+{
+  "name": "myexpress",
+  "version": "1.0.0",
+  "description": "The purpose of this challenge is to (re)create a HTTP client server. Using TypeScript and the http node package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc index.ts && node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seedockh/myExpress.git"
+  },
+  "author": "Pierre Hérissé",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Seedockh/myExpress/issues"
+  },
+  "homepage": "https://github.com/Seedockh/myExpress#readme"
+}
