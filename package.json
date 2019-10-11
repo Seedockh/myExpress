@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc index.ts && node index.js"
+    "start": "tsc && nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Seedockh/myExpress/issues"
   },
-  "homepage": "https://github.com/Seedockh/myExpress#readme"
+  "homepage": "https://github.com/Seedockh/myExpress#readme",
+  "dependencies": {
+    "@types/node": "^12.7.12",
+    "http": "0.0.0",
+    "nodemon": "^1.19.3"
+  }
 }
