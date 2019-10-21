@@ -33,6 +33,10 @@ interface Route {
 
 class MyExpress {
   [method:string]:ExpressMethod|ExpressProperty|any;
+
+  public request:ExpressIncomingMessage;
+  public response:ExpressServerResponse;
+
   private server:Server;
   private routes:Route[] = [];
   private _send:(message?:string|object, status?:number)=>void = (message?:string|object, status?:number) => {
@@ -46,9 +50,6 @@ class MyExpress {
     this.request.setEncoding('utf8');
     this.response.send(JSON.stringify(body,null,2), 200);
   };
-
-  public request:ExpressIncomingMessage;
-  public response:ExpressServerResponse;
 
   constructor() {
     this._createMethods();
@@ -72,7 +73,7 @@ class MyExpress {
 
       if (routeExists) {
         if (routeExists.method === 'USE') {
-          routeExists.callback(this.request, this.response, this.request.resume);
+          routeExists.callback(this.request, this.response, () => {return});
         } else {
           routeExists.callback(this.request, this.response);
         }
