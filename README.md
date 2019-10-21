@@ -16,15 +16,15 @@ https://github.com/makiboto/myExpress
   - [X] Define `app.post()`
   - [X] Define `app.put()`
   - [X] Define `app.delete()`
-  - [] Define `app.all()`
+  - [ ] Define `app.all()`
   - [X] Define `app.render()`
   - [X] Create template engine with `{{ }}`
   - [X] Add modifier with `{{ | }}` for `upper`, `lower`
-  - [] Add `fixed:n` modifier
-  - [] Define `app.use()`
-  - [] Handle query parameters sent by client
-  - [] Bonus: add if/else, for/loops etc. in template engine
-  - [] Add more `express` features
+  - [ ] Add `fixed:n` modifier
+  - [ ] Define `app.use()`
+  - [ ] Handle query parameters sent by client
+  - [ ] Bonus: add if/else, for/loops etc. in template engine
+  - [ ] Add more `express` features
     
 
 # Auto-generated HomePage
