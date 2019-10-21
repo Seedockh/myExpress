@@ -1,9 +1,13 @@
 import express from './lib/myExpress';
 
 const app = express();
-
 const port = 1337;
 const host = '127.0.0.1';
+
+app.all('/all', (req, res) => {
+  res.json({ all: `This is the response from ${req.method} on /all route.` });
+  res.end();
+})
 
 app.get('/', (req, res) => {
   app.render('index', {name: 'myExpress', author: 'Pierre Hérissé', serverName: 'myExpress'}, (err, html) => {
@@ -12,10 +16,6 @@ app.get('/', (req, res) => {
       res.json({ get: 'This is the response from a GET / request.' });
       res.end();
   });
-})
-
-app.all('/api', (req, res) => {
-  console.log('creating /api all()');
 })
 
 app.get('/home', (req, res) => {
@@ -44,5 +44,5 @@ app.delete('/api', (req, res) => {
 })
 
 app.listen(port, host, () => {
-  console.log(`This server is now listenning on http://${host}:${port}`);
+  console.log(`This server is now listening on http://${host}:${port}`);
 });

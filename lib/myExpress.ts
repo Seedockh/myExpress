@@ -26,7 +26,7 @@ class MyExpress {
       // Adding method .send() to ServerResponse object
       this.response.send = (message:string|object, status:number) => {
         if (typeof message!=='string') message = message.toString();
-        console.log(message);
+        console.log(`[${status}]::${message}`);
         this.response.write(message);
         this.response.end();
       };
@@ -40,23 +40,16 @@ class MyExpress {
       // Looking for the requested route
       const { url, method } = this.request;
       const routeExists = this.routes.find(currentRoute =>
-        currentRoute.method === method && currentRoute.path === url
+        ( currentRoute.method === method  ||
+          currentRoute.method === 'ALL' ||
+          currentRoute.method === 'USE' ) &&
+        currentRoute.path === url
       );
 
       if (routeExists) {
-        switch(method) {
-          case 'ALL':
-            console.log('ALL METHOD CALLED');
-            break;
-          case 'USE':
-            console.log('USE METHOD CALLED');
-            break;
-          default:
-            routeExists.callback(this.request, this.response);
-            break;
-        }
+        routeExists.callback(this.request, this.response);
       } else {
-        this.response.send("Error : this route doesn't exist.", 404);
+        this.response.send("Error : this route is not defined.", 404);
       }
     })
   }
