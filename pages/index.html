@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>myExpress</title>
+  <style>
+    body {
+      background-color: black;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial;
+    }
+      body h1 {
+        color: white;
+      }
+    .requests {
+      color: white;
+      padding: 1em;
+      margin-top: 2em;
+      width: 550px;
+      text-align: left;
+      border-radius: 30px;
+      box-shadow: 0 0 10px white;
+    }
+      .requests h2 {
+        text-align: center;
+        padding-bottom: 1em;
+        border-bottom: 1px solid white;
+      }
+      .request {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        border-bottom: 1px dotted white;
+        padding: .5em 0;
+      }
+        .request p {
+            width: 50px;
+        }
+        .request input {
+            height: 30px;
+            border: 0;
+            border-radius: 5px;
+            padding: 0 1em;
+            width: 200px;
+            text-align: center;
+        }
+        .request:last-child {
+          border-bottom: 0;
+        }
+        .request button {
+          height: 30px;
+          width: 100px;
+          background-color: black;
+          color: white;
+          font-weight: bold;
+        }
+          .request button[disabled] {
+            opacity: .3;
+            background-color: darkred;
+          }
+        .response {
+          color: green;
+          width: 100% !important;
+          margin: .5em 2em .5em 3em;
+          font-family: monospace;
+        }
+
+    footer {
+      color: white;
+      height: 150px;
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛠 {{name}} toolbox 🛠</h1>
+  <div class="requests">
+    <h2>SEND REQUESTS TO {{serverName|upper}}</h2>
+    <div class="request">
+      <p><strong>GET</strong></p>
+      <input type="text" id="getInput" placeholder="For example: /" name="get"/>
+      <button id="getButton">SEND</button>
+      <p class="response" id="getResponse"></p>
+    </div>
+    <div class="request">
+      <p><strong>POST</strong></p>
+      <input type="text" id="postInput" placeholder="For example: /api" name="getHeader"/>
+      <button id="postButton">SEND</button>
+      <p class="response" id="postResponse"></p>
+    </div>
+    <div class="request">
+      <p><strong>PUT</strong></p>
+      <input type="text" id="putInput" placeholder="For example: /api" name="getHeader"/>
+      <button id="putButton">SEND</button>
+      <p class="response" id="putResponse"></p>
+    </div>
+    <div class="request">
+      <p><strong>DELETE</strong></p>
+      <input type="text" id="deleteInput" placeholder="For example: /api" name="getHeader"/>
+      <button id="deleteButton">SEND</button>
+      <p class="response" id="deleteResponse"></p>
+    </div>
+    <div class="request">
+      <p><strong>ALL</strong></p>
+      <input type="text" id="allInput" placeholder="For example: /api" name="getHeader"/>
+      <button id="allButton">SEND</button>
+      <p class="response" id="allResponse"></p>
+    </div>
+    <div class="request">
+      <p><strong>USE</strong></p>
+      <input type="text" id="useInput" placeholder="For example: /api" name="getHeader"/>
+      <button id="useButton"disabled>SEND</button>
+      <p class="response" id="useResponse"></p>
+    </div>
+  </div>
+
+  <footer>
+    <code>Author: {{author|lower}}</code>
+  </footer>
+
+  <script>
+
+  // GET FIELD
+    const getButton = document.getElementById("getButton");
+    const getInput = document.getElementById("getInput");
+    const getResponse = document.getElementById("getResponse");
+    getButton.onclick = () => {
+      const req = new XMLHttpRequest();
+      let val = getInput.value.charAt(0) === '/' ? getInput.value : '/'+getInput.value;
+      if (val==='/') val='/home';
+      req.onreadystatechange = function () {
+        if (req.readyState === 4) {
+          getResponse.innerHTML = req.response;
+        }
+      }
+      req.open("GET", val, true);
+      req.send(null);
+    }
+
+    // POST FIELD
+      const postButton = document.getElementById("postButton");
+      const postInput = document.getElementById("postInput");
+      const postResponse = document.getElementById("postResponse");
+      postButton.onclick = () => {
+        const req = new XMLHttpRequest();
+        let val = postInput.value.charAt(0) === '/' ? postInput.value : '/'+postInput.value;
+        req.onreadystatechange = function () {
+          if (req.readyState === 4) {
+            postResponse.innerHTML = req.response;
+          }
+        }
+        req.open("POST", val, true);
+        req.send(null);
+      }
+
+      // PUT FIELD
+        const putButton = document.getElementById("putButton");
+        const putInput = document.getElementById("putInput");
+        const putResponse = document.getElementById("putResponse");
+        putButton.onclick = () => {
+          const req = new XMLHttpRequest();
+          let val = putInput.value.charAt(0) === '/' ? putInput.value : '/'+putInput.value;
+          req.onreadystatechange = function () {
+            if (req.readyState === 4) {
+              putResponse.innerHTML = req.response;
+            }
+          }
+          req.open("PUT", val, true);
+          req.send(null);
+        }
+
+        // DELETE FIELD
+          const deleteButton = document.getElementById("deleteButton");
+          const deleteInput = document.getElementById("deleteInput");
+          const deleteResponse = document.getElementById("deleteResponse");
+          deleteButton.onclick = () => {
+            const req = new XMLHttpRequest();
+            let val = deleteInput.value.charAt(0) === '/' ? deleteInput.value : '/'+deleteInput.value;
+            req.onreadystatechange = function () {
+              if (req.readyState === 4) {
+                deleteResponse.innerHTML = req.response;
+              }
+            }
+            req.open("DELETE", val, true);
+            req.send(null);
+          }
+
+        // ALL FIELD
+          const allButton = document.getElementById("allButton");
+          const allInput = document.getElementById("allInput");
+          const allResponse = document.getElementById("allResponse");
+          allButton.onclick = () => {
+            const req = new XMLHttpRequest();
+            let val = allInput.value.charAt(0) === '/' ? allInput.value : '/'+allInput.value;
+            req.onreadystatechange = function () {
+              if (req.readyState === 4) {
+                allResponse.innerHTML = req.response;
+              }
+            }
+            req.open("ALL", val, true);
+            req.send(null);
+          }
+  </script>
+</body>
+</html>
