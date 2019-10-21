@@ -29,7 +29,7 @@ https://github.com/makiboto/myExpress
 
 # Default HomePage
 
-## Template values - Proof of concept
+## Template values
 ```html
 <h1>🛠 {{name}} toolbox 🛠</h1>
 ```
