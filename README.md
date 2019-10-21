@@ -27,11 +27,9 @@ https://github.com/makiboto/myExpress
   - [ ] Add more `express` features
     
 
-# Auto-generated HomePage
+# Default HomePage
 
-![https://image.noelshack.com/fichiers/2019/43/1/1571642692-screenshot-from-2019-10-21-09-24-24.png](https://image.noelshack.com/fichiers/2019/43/1/1571642692-screenshot-from-2019-10-21-09-24-24.png)
-
-Auto generated template values :
+## Template values - Proof of concept
 ```html
 <h1>🛠 {{name}} toolbox 🛠</h1>
 ```
@@ -43,3 +41,7 @@ Auto generated template values :
 ```html
 <code>Author: {{author|lower}}</code>
 ```
+
+## View
+
+![https://image.noelshack.com/fichiers/2019/43/1/1571642692-screenshot-from-2019-10-21-09-24-24.png](https://image.noelshack.com/fichiers/2019/43/1/1571642692-screenshot-from-2019-10-21-09-24-24.png)
