@@ -16,7 +16,7 @@ https://github.com/makiboto/myExpress
   - [X] Define `app.post()`
   - [X] Define `app.put()`
   - [X] Define `app.delete()`
-  - [ ] Define `app.all()`
+  - [X] Define `app.all()`
   - [X] Define `app.render()`
   - [X] Create template engine with `{{ }}`
   - [X] Add modifier with `{{ | }}` for `upper`, `lower`
