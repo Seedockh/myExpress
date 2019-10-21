@@ -31,3 +31,15 @@ https://github.com/makiboto/myExpress
 
 ![https://image.noelshack.com/fichiers/2019/43/1/1571642692-screenshot-from-2019-10-21-09-24-24.png](https://image.noelshack.com/fichiers/2019/43/1/1571642692-screenshot-from-2019-10-21-09-24-24.png)
 
+Auto generated template values :
+```html
+<h1>🛠 {{name}} toolbox 🛠</h1>
+```
+
+```html
+<h2>SEND REQUESTS TO {{serverName|upper}}</h2>
+```
+
+```html
+<code>Author: {{author|lower}}</code>
+```
