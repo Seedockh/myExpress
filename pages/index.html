@@ -107,18 +107,6 @@
       <button id="deleteButton">SEND</button>
       <p class="response" id="deleteResponse"></p>
     </div>
-    <div class="request">
-      <p><strong>ALL</strong></p>
-      <input type="text" id="allInput" placeholder="For example: /api" name="getHeader"/>
-      <button id="allButton">SEND</button>
-      <p class="response" id="allResponse"></p>
-    </div>
-    <div class="request">
-      <p><strong>USE</strong></p>
-      <input type="text" id="useInput" placeholder="For example: /api" name="getHeader"/>
-      <button id="useButton"disabled>SEND</button>
-      <p class="response" id="useResponse"></p>
-    </div>
   </div>
 
   <footer>
@@ -135,7 +123,7 @@
       const req = new XMLHttpRequest();
       let val = getInput.value.charAt(0) === '/' ? getInput.value : '/'+getInput.value;
       if (val==='/') val='/home';
-      req.onreadystatechange = function () {
+      req.onreadystatechange = () => {
         if (req.readyState === 4) {
           getResponse.innerHTML = req.response;
         }
@@ -151,7 +139,7 @@
       postButton.onclick = () => {
         const req = new XMLHttpRequest();
         let val = postInput.value.charAt(0) === '/' ? postInput.value : '/'+postInput.value;
-        req.onreadystatechange = function () {
+        req.onreadystatechange = () => {
           if (req.readyState === 4) {
             postResponse.innerHTML = req.response;
           }
@@ -167,7 +155,7 @@
         putButton.onclick = () => {
           const req = new XMLHttpRequest();
           let val = putInput.value.charAt(0) === '/' ? putInput.value : '/'+putInput.value;
-          req.onreadystatechange = function () {
+          req.onreadystatechange = () => {
             if (req.readyState === 4) {
               putResponse.innerHTML = req.response;
             }
@@ -183,28 +171,12 @@
           deleteButton.onclick = () => {
             const req = new XMLHttpRequest();
             let val = deleteInput.value.charAt(0) === '/' ? deleteInput.value : '/'+deleteInput.value;
-            req.onreadystatechange = function () {
+            req.onreadystatechange = () => {
               if (req.readyState === 4) {
                 deleteResponse.innerHTML = req.response;
               }
             }
             req.open("DELETE", val, true);
-            req.send(null);
-          }
-
-        // ALL FIELD
-          const allButton = document.getElementById("allButton");
-          const allInput = document.getElementById("allInput");
-          const allResponse = document.getElementById("allResponse");
-          allButton.onclick = () => {
-            const req = new XMLHttpRequest();
-            let val = allInput.value.charAt(0) === '/' ? allInput.value : '/'+allInput.value;
-            req.onreadystatechange = function () {
-              if (req.readyState === 4) {
-                allResponse.innerHTML = req.response;
-              }
-            }
-            req.open("ALL", val, true);
             req.send(null);
           }
   </script>

@@ -1,6 +1,9 @@
-import express from './src/myExpress';
+import express from './lib/myExpress';
 
 const app = express();
+
+const port = 1337;
+const host = '127.0.0.1';
 
 app.get('/', (req, res) => {
   app.render('index', {name: 'myExpress', author: 'Pierre Hérissé', serverName: 'myExpress'}, (err, html) => {
@@ -40,4 +43,6 @@ app.delete('/api', (req, res) => {
   res.end();
 })
 
-app.listen(1337, '127.0.0.1');
+app.listen(port, host, () => {
+  console.log(`This server is now listenning on http://${host}:${port}`);
+});

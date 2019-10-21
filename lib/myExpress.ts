@@ -16,9 +16,6 @@ class MyExpress {
   public server:Server;
   public request:IncomingMessage;
   public response:ExpressServerResponse;
-  public port:number = 1337;
-  public host:string = '127.0.0.1';
-  public url:string = `http://${this.host}:${this.port}`;
   public routes:Array<Route> = [];
 
   constructor() {
@@ -46,8 +43,19 @@ class MyExpress {
         currentRoute.method === method && currentRoute.path === url
       );
 
-      if (routeExists) routeExists.callback(this.request, this.response);
-      else {
+      if (routeExists) {
+        switch(method) {
+          case 'ALL':
+            console.log('ALL METHOD CALLED');
+            break;
+          case 'USE':
+            console.log('USE METHOD CALLED');
+            break;
+          default:
+            routeExists.callback(this.request, this.response);
+            break;
+        }
+      } else {
         this.response.send("Error : this route doesn't exist.", 404);
       }
     })
@@ -73,13 +81,8 @@ class MyExpress {
     this.routes.push({ method: "ALL", path: path, callback: clientCall });
   }
 
-  listen(port:number, host:string):void {
-    this.server.listen(port, host, () => {
-      this.port = port;
-      this.host = host;
-      this.url = `http://${host}:${port}`
-      console.log(`This server is now listenning on address http://${host}:${port}`);
-    });
+  listen(port:number, host:string, callback?:()=>void):void {
+    this.server.listen(port, host, callback);
   }
 
   render(

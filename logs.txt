@@ -1,6 +1,0 @@
-
-> myexpress@1.0.0 start /home/pierre/Desktop/myExpress
-> tsc && node dist/index.js
-
-This server is now listenning on address http://127.0.0.1:1337
-Server created successfully !

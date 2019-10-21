@@ -3,8 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var myExpress_1 = __importDefault(require("./src/myExpress"));
+var myExpress_1 = __importDefault(require("./lib/myExpress"));
 var app = myExpress_1["default"]();
+var port = 1337;
+var host = '127.0.0.1';
 app.get('/', function (req, res) {
     app.render('index', { name: 'myExpress', author: 'Pierre Hérissé', serverName: 'myExpress' }, function (err, html) {
         res.setHeader('Content-Type', 'text/html');
@@ -36,5 +38,7 @@ app["delete"]('/api', function (req, res) {
     res.json({ "delete": 'This is the response from a DELETE API request.' });
     res.end();
 });
-app.listen(1337, '127.0.0.1');
+app.listen(port, host, function () {
+    console.log("This server is now listenning on http://" + host + ":" + port);
+});
 //# sourceMappingURL=index.js.map
