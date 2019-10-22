@@ -28,11 +28,6 @@ class MyExpress {
       const routeExists = this.routes.find(currentRoute => {
         const { url, method } = this.request;
 
-        console.log(currentRoute);
-        console.log(method);
-        console.log(url);
-        console.log(this._parseQueryUrl(url,currentRoute.path));
-
         return ( currentRoute.method===method ||
           currentRoute.method==='ALL' ||
           currentRoute.method==='USE') &&
