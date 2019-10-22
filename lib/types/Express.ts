@@ -2,7 +2,10 @@ import { Server, ServerResponse, IncomingMessage } from 'http';
 import { Route } from './Route'
 import { DefaultCallback } from './Callback';
 
-export interface ExpressIncomingMessage extends IncomingMessage { }
+export interface ExpressIncomingMessage extends IncomingMessage {
+  params:Record<string,string> | Record<string,number>;
+  qParams:Array<object>;
+}
 export interface ExpressServerResponse extends ServerResponse {
   send:(message?:string|object, status?:number) => void;
   json:(body?:object) => void;

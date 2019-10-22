@@ -3,26 +3,15 @@ import http, { Server } from 'http';
 import { ExpressIncomingMessage, ExpressServerResponse, ExpressMethod, ExpressProperty, ExpressSend, ExpressJson } from './types/Express';
 import { DefaultCallback, RenderCallback } from './types/Callback';
 import { Route } from './types/Route';
+import expressMethods from './methods';
 
 class MyExpress {
   [method:string]:ExpressMethod|ExpressProperty|any;
 
   public request:ExpressIncomingMessage;
   public response:ExpressServerResponse;
-
   private server:Server;
   private routes:Route[] = [];
-  private _send:ExpressSend = (message?:string|object, status?:number) => {
-    if (!message) message = '';
-    if (typeof message!=='string') message = message.toString();
-    console.log(`[${status}]::${message}`);
-    this.response.write(message);
-    this.response.end();
-  };
-  private _json:ExpressJson = (body:object) => {
-    this.request.setEncoding('utf8');
-    this.response.send(JSON.stringify(body,null,2), 200);
-  };
 
   constructor() {
     this._createMethods();
@@ -36,21 +25,41 @@ class MyExpress {
       this.response.send = this._send;
       this.response.json = this._json;
 
-      const { url, method } = this.request;
-      const routeExists = this.routes.find(currentRoute =>
-        ( currentRoute.method === method  ||
-          currentRoute.method === 'ALL' ||
-          currentRoute.method === 'USE' ) &&
-        currentRoute.path === url
-      );
+      const routeExists = this.routes.find(currentRoute => {
+        const { url, method } = this.request;
+        let parsedUrl = '';
 
-      console.log(url);
+        // Let's fill request params if route has :params
+        if (/:/.test(currentRoute.path)) {
+          const urlParams = url.match(/\/[^\/]*/gi);
+          const routeParams = currentRoute.path.match(/\/[^\/]*/gi);
+          const values = {};
+          this.request.params = {};
+
+          for (let i=0;i<urlParams.length;i++) {
+            if (urlParams[i]===routeParams[i]) {
+              this.request.params[routeParams[i+1].replace('/:','')] = urlParams[i+1].replace('/','');
+              parsedUrl = url.replace(routeParams[i+1], urlParams[i+1]);
+              i++;
+            }
+          }
+        }
+
+        return ( currentRoute.method===method ||
+          currentRoute.method==='ALL' ||
+          currentRoute.method==='USE') &&
+        ( currentRoute.path===url ||
+          parsedUrl===url );
+      });
 
       if (routeExists) {
-        if (routeExists.method === 'USE') {
-          routeExists.callback(this.request, this.response, () => {return});
-        } else {
-          routeExists.callback(this.request, this.response);
+        switch (routeExists.method) {
+          case 'USE':
+            routeExists.callback(this.request, this.response, () => {return});
+            break;
+          default:
+            routeExists.callback(this.request, this.response);
+            break;
         }
       } else {
         this.response.send("Error : this route is not defined.", 404);
@@ -59,12 +68,25 @@ class MyExpress {
   }
 
   private _createMethods() {
-    for (const methods of ['GET', 'POST', 'PUT', 'DELETE', 'ALL', 'USE']) {
+    for (const methods of expressMethods) {
       this[methods.toLowerCase()] = (path:string, clientCall:DefaultCallback):void => {
         this.routes.push({ method: methods, path: path, callback: clientCall });
       }
     }
   }
+
+  private _send:ExpressSend = (message?:string|object, status?:number) => {
+    if (!message) message = '';
+    if (typeof message!=='string') message = message.toString();
+    console.log(`[${status}] - ${message}`);
+    this.response.write(`[${status}] - ${message}`);
+    this.response.end();
+  };
+
+  private _json:ExpressJson = (body:object) => {
+    this.request.setEncoding('utf8');
+    this.response.send(JSON.stringify(body,null,2), 200);
+  };
 
   listen(port:number, host:string, callback?:()=>void):void {
     this.server.listen(port, host, callback);

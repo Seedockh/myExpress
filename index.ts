@@ -29,6 +29,17 @@ app.get('/home', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
   res.end();
 })
 
+app.get('/user/:user_id/vehicle/:color', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
+  const { user_id, color } = req.params;
+  res.json({ message: `The user ${user_id} has a ${color} vehicle.` });
+  res.end();
+})
+
+app.get('/users', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
+  //res.json(req.qParams);
+  res.end();
+})
+
 app.get('/api', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
   res.json({ get: 'This is the response from a GET /api request.' });
   res.end();
