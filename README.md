@@ -45,7 +45,7 @@ app.render('index', {name: 'myExpress', author: 'Pierre Hérissé', serverName: 
 ```
 
 ```html
-<h2>SEND REQUESTS TO {{serverName|upper}}</h2>
+<h2>SEND REQUESTS TO {{serverName|upper}}:{{weight|fixed:2}}</h2>
 ```
 
 ```html
