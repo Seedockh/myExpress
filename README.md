@@ -5,9 +5,11 @@ https://github.com/makiboto/myExpress
 
 
 # 🔋 Author
+```js
 {
   "username": "pierre hérissé"
 }
+```
 
 # 🔧 Steps 
 
