@@ -31,6 +31,13 @@ https://github.com/makiboto/myExpress
 
 #  🛠 myExpress Toolbox 🛠
 
+## ⚙️ Start project
+
+```console
+$ npm install && npm start
+```
+
+
 ## ⚙️ Template render
 
 ```js
