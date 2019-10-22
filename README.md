@@ -61,3 +61,17 @@ You can query the **Server** directly from the **View** (thanks to `XMLHttpReque
 
 ![https://image.noelshack.com/fichiers/2019/43/1/1571650128-screenshot-from-2019-10-21-11-28-30.png](https://image.noelshack.com/fichiers/2019/43/1/1571650128-screenshot-from-2019-10-21-11-28-30.png)
 
+
+## Parameters
+
+You can send **parameters** directly through the URL, with 2 methods :
+
+#### /path/:parameter :
+
+![https://image.noelshack.com/fichiers/2019/43/2/1571738290-screenshot-from-2019-10-22-11-57-45.png](https://image.noelshack.com/fichiers/2019/43/2/1571738290-screenshot-from-2019-10-22-11-57-45.png)
+
+#### ?parameter=value
+
+
+
+
