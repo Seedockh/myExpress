@@ -72,6 +72,6 @@ You can send **parameters** directly through the URL, with 2 methods :
 
 #### ?parameter=value
 
-
+![https://image.noelshack.com/fichiers/2019/43/2/1571745848-screenshot-from-2019-10-22-14-03-45.png](https://image.noelshack.com/fichiers/2019/43/2/1571745848-screenshot-from-2019-10-22-14-03-45.png)
 
 
