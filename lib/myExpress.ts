@@ -27,29 +27,17 @@ class MyExpress {
 
       const routeExists = this.routes.find(currentRoute => {
         const { url, method } = this.request;
-        let parsedUrl = '';
 
-        // Let's fill request params if route has :params
-        if (/:/.test(currentRoute.path)) {
-          const urlParams = url.match(/\/[^\/]*/gi);
-          const routeParams = currentRoute.path.match(/\/[^\/]*/gi);
-          const values = {};
-          this.request.params = {};
-
-          for (let i=0;i<urlParams.length;i++) {
-            if (urlParams[i]===routeParams[i]) {
-              this.request.params[routeParams[i+1].replace('/:','')] = urlParams[i+1].replace('/','');
-              parsedUrl = url.replace(routeParams[i+1], urlParams[i+1]);
-              i++;
-            }
-          }
-        }
+        console.log(currentRoute);
+        console.log(method);
+        console.log(url);
+        console.log(this._parseQueryUrl(url,currentRoute.path));
 
         return ( currentRoute.method===method ||
           currentRoute.method==='ALL' ||
           currentRoute.method==='USE') &&
         ( currentRoute.path===url ||
-          parsedUrl===url );
+          currentRoute.path===this._parseQueryUrl(url,currentRoute.path) );
       });
 
       if (routeExists) {
@@ -73,6 +61,39 @@ class MyExpress {
         this.routes.push({ method: methods, path: path, callback: clientCall });
       }
     }
+  }
+
+  private _parseQueryUrl(query:string, route:string) {
+    let parsedUrl = '';
+
+    if (/:/.test(route)) {
+      const urlParams = query.match(/\/[^\/]*/gi);
+      const routeParams = route.match(/\/[^\/]*/gi);
+      this.request.params = {};
+
+      for (let i=0;i<urlParams.length;i++) {
+        if (urlParams[i]===routeParams[i]) {
+          this.request.params[routeParams[i+1].replace('/:','')] = urlParams[i+1].replace('/','');
+          //parsedUrl = query.replace(routeParams[i+1], urlParams[i+1]);
+          console.log(parsedUrl);
+          i++;
+        }
+      }
+      parsedUrl = '';
+      routeParams.forEach((route, index) => parsedUrl += routeParams[index])
+    }
+
+    if (/\?/.test(query)) {
+      const baseUrl = query.split('?')[0];
+      const rawParams = query.split('?')[1].split('&');
+      let params:{[x:string]: string} = {};
+      rawParams.forEach( param => params[param.split('=')[0]] = param.split('=')[1] );
+
+      this.request.qParams = params;
+      parsedUrl = baseUrl;
+    }
+
+    return parsedUrl;
   }
 
   private _send:ExpressSend = (message?:string|object, status?:number) => {

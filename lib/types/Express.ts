@@ -3,8 +3,8 @@ import { Route } from './Route'
 import { DefaultCallback } from './Callback';
 
 export interface ExpressIncomingMessage extends IncomingMessage {
-  params:Record<string,string> | Record<string,number>;
-  qParams:Array<object>;
+  params:Record<string,string|number>;
+  qParams:Record<string, string|number>;
 }
 export interface ExpressServerResponse extends ServerResponse {
   send:(message?:string|object, status?:number) => void;
