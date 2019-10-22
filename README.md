@@ -92,3 +92,16 @@ app.post('/users', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
 ![https://image.noelshack.com/fichiers/2019/43/2/1571745848-screenshot-from-2019-10-22-14-03-45.png](https://image.noelshack.com/fichiers/2019/43/2/1571745848-screenshot-from-2019-10-22-14-03-45.png)
 
 
+# 📡 Defined Routes
+
+| **METHOD** | **PATH** | **RESPONSE** |
+|------------|----------|--------------|
+| **GET** | / | `{ get: 'This is the response from a GET / request.' }` |
+| **GET** | /home | `{ get: 'This is the response from a GET /home request.' }` |
+| **GET** | /api | `{ get: 'This is the response from a GET /api request.' }` |
+| **GET** | /user/:user_id/vehicle/:color | `{ message: `The user ${user_id} has a ${color} vehicle.` }` |
+| **POST** | /api | `{ post: 'This is the response from a POST /api request.' }` |
+| **POST** | /users?any=parameter&you=want | `req.qParams` |
+| **PUT** | /api | `{ put: 'This is the response from a PUT /api request.' }` |
+| **DELETE** | /api | `{ delete: 'This is the response from a DELETE /api request.' }` |
+
