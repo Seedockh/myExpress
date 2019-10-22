@@ -15,7 +15,7 @@ app.use('/use', (req:ExpressIncomingMessage, res:ExpressServerResponse, next:Fun
 })
 
 app.get('/', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
-  app.render('index', {name: 'myExpress', author: 'Pierre Hérissé', serverName: 'myExpress'}, (err, html) => {
+  app.render('index', {name: 'myExpress', author: 'Pierre Hérissé', serverName: 'localhost',  weight: 13.36666666666666}, (err, html) => {
     res.setHeader('Content-Type', 'text/html');
     res.write(html)
     res.json({ get: 'This is the response from a GET / request.' });

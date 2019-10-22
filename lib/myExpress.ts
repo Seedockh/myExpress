@@ -98,7 +98,7 @@ class MyExpress {
   ** @make_html_items_being_replaced_by_given_options
   */
   private _formatHTMLView(html:string, options:object) {
-    const dynamicFields:string[] = html.match(/{{*.*}}/gm);
+    const dynamicFields:string[] = html.match(/{{(\w+)[|]?(\w+\:?[0-9]?)}}/gm);
     let instructions:Array<string[]> = [];
 
     if (typeof options==='object') {
@@ -112,12 +112,15 @@ class MyExpress {
           instructions.forEach( rule => {
             if (rule[0]===option && rule.length>1) {
               for (let i=1; i<rule.length; i++) {
-                switch(rule[i]) {
-                  case 'upper':
+                switch(true) {
+                  case /upper/.test(rule[i]):
                     value = value.toUpperCase();
                     break;
-                  case 'lower':
+                  case /lower/.test(rule[i]):
                     value = value.toLowerCase();
+                    break;
+                  case /[fixed:][0-9]+/.test(rule[i]):
+                    value = value.toFixed(rule[i].split(':')[1])
                     break;
                   default: break;
                 }
