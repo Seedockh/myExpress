@@ -1,4 +1,5 @@
-import express, { ExpressServerResponse, ExpressIncomingMessage } from './lib/myExpress';
+import express from './lib/myExpress';
+import { ExpressServerResponse, ExpressIncomingMessage } from './lib/types/Express';
 
 const app = express();
 const port = 1337;
@@ -9,7 +10,7 @@ app.all('/all', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
   res.end();
 })
 
-app.use('/use', (req, res, next) => {
+app.use('/use', (req:ExpressIncomingMessage, res:ExpressServerResponse, next:Function) => {
   res.json({ use: `[TIME:${Date.now()}]-This is the response from ${req.method} on /use routes.` })
   next();
 })

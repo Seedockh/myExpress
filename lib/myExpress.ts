@@ -1,35 +1,8 @@
-import http, { Server, IncomingMessage, ServerResponse } from 'http';
 import fs, { PathLike } from 'fs';
-
-export interface ExpressIncomingMessage extends IncomingMessage { }
-export interface ExpressServerResponse extends ServerResponse {
-  send:(message?:string|object, status?:number) => void;
-  json:(body?:object) => void;
-}
-
-interface ExpressMethod {
-  (path:string, clientCall:Callback):void
-}
-interface ExpressProperty {
-  name:string | Server | Route[]
-  | ((message?:string|object, status?:number)=>void)
-  | ((body:object)=>void)
-  | ExpressIncomingMessage | ExpressServerResponse
-  | ((port:number, host:string, callback?:()=>void)=>void);
-}
-
-interface Callback {
-  ( req:ExpressIncomingMessage,
-    res:ExpressServerResponse,
-    next?:Function
-  ):void
-}
-
-interface Route {
-  method:string,
-  path:string,
-  callback:(req:ExpressIncomingMessage, res:ExpressServerResponse, next?:Function)=>void;
-}
+import http, { Server } from 'http';
+import { ExpressIncomingMessage, ExpressServerResponse, ExpressMethod, ExpressProperty, ExpressSend, ExpressJson } from './types/Express';
+import { DefaultCallback, RenderCallback } from './types/Callback';
+import { Route } from './types/Route';
 
 class MyExpress {
   [method:string]:ExpressMethod|ExpressProperty|any;
@@ -39,14 +12,14 @@ class MyExpress {
 
   private server:Server;
   private routes:Route[] = [];
-  private _send:(message?:string|object, status?:number)=>void = (message?:string|object, status?:number) => {
+  private _send:ExpressSend = (message?:string|object, status?:number) => {
     if (!message) message = '';
     if (typeof message!=='string') message = message.toString();
     console.log(`[${status}]::${message}`);
     this.response.write(message);
     this.response.end();
   };
-  private _json:(body:object)=>void = (body:object) => {
+  private _json:ExpressJson = (body:object) => {
     this.request.setEncoding('utf8');
     this.response.send(JSON.stringify(body,null,2), 200);
   };
@@ -71,6 +44,8 @@ class MyExpress {
         currentRoute.path === url
       );
 
+      console.log(url);
+
       if (routeExists) {
         if (routeExists.method === 'USE') {
           routeExists.callback(this.request, this.response, () => {return});
@@ -84,39 +59,31 @@ class MyExpress {
   }
 
   private _createMethods() {
-    for (const methods of ['GET', 'POST', 'PUT', 'DELETE']) {
-      this[methods.toLowerCase()] = (path:string, clientCall:Callback):void => {
+    for (const methods of ['GET', 'POST', 'PUT', 'DELETE', 'ALL', 'USE']) {
+      this[methods.toLowerCase()] = (path:string, clientCall:DefaultCallback):void => {
         this.routes.push({ method: methods, path: path, callback: clientCall });
       }
     }
-  }
-
-  all(path:string, clientCall:Callback):void {
-    this.routes.push({ method: "ALL", path: path, callback: clientCall });
   }
 
   listen(port:number, host:string, callback?:()=>void):void {
     this.server.listen(port, host, callback);
   }
 
-  use( path:string, clientCall:Callback) {
-    this.routes.push({ method: "USE", path: path, callback: clientCall });
-  }
-
   render(
     view:string,
-    callback:object|((err:Error, html:string)=>void),
-    options?:object|((err:Error, html:string)=>void) )
+    callback:object|RenderCallback,
+    options?:object|RenderCallback )
   {
     if (typeof callback==='object') {
-      const backupCallback = options;
+      const backupDefaultCallback = options;
       options = callback;
-      callback = backupCallback;
+      callback = backupDefaultCallback;
     }
 
     try {
       if (fs.existsSync(`./pages/${view}.html`)) {
-        fs.readFile(`./pages/${view}.html`, (err:NodeJS.ErrnoException, data:any) => {
+        fs.readFile(`./pages/${view}.html`, (err:NodeJS.ErrnoException, data:Buffer) => {
           if (typeof callback!=='object') {
             if (err) return callback(err, null);
 
