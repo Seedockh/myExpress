@@ -54,7 +54,7 @@ app.render('index', {name: 'myExpress', author: 'Pierre Hérissé', serverName: 
 
 ## ⚙️ View
 
-![https://image.noelshack.com/fichiers/2019/43/1/1571642692-screenshot-from-2019-10-21-09-24-24.png](https://image.noelshack.com/fichiers/2019/43/1/1571642692-screenshot-from-2019-10-21-09-24-24.png)
+![https://image.noelshack.com/fichiers/2019/43/2/1571748712-screenshot-from-2019-10-22-14-51-26.png](https://image.noelshack.com/fichiers/2019/43/2/1571748712-screenshot-from-2019-10-22-14-51-26.png)
 
 
 ## ⚙️ Queries
