@@ -68,9 +68,24 @@ You can send **parameters** directly through the URL, with 2 methods :
 
 #### /path/:parameter :
 
+```js
+app.get('/user/:user_id/vehicle/:color', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
+  const { user_id, color } = req.params;
+  res.json({ message: `The user ${user_id} has a ${color} vehicle.` });
+  res.end();
+})
+```
+
 ![https://image.noelshack.com/fichiers/2019/43/2/1571738290-screenshot-from-2019-10-22-11-57-45.png](https://image.noelshack.com/fichiers/2019/43/2/1571738290-screenshot-from-2019-10-22-11-57-45.png)
 
 #### ?parameter=value
+
+```js
+app.post('/users', (req:ExpressIncomingMessage, res:ExpressServerResponse) => {
+  res.json(req.qParams);
+  res.end();
+})
+```
 
 ![https://image.noelshack.com/fichiers/2019/43/2/1571745848-screenshot-from-2019-10-22-14-03-45.png](https://image.noelshack.com/fichiers/2019/43/2/1571745848-screenshot-from-2019-10-22-14-03-45.png)
 
