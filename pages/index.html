@@ -125,7 +125,11 @@
       if (val==='/') val='/home';
       req.onreadystatechange = () => {
         if (req.readyState === 4) {
-          getResponse.innerHTML = req.response;
+          if (req.status === 200) {
+            getResponse.innerHTML = req.response;
+          } else {
+            getResponse.innerHTML = 'There was an error with your server. Try to reboot it :)';
+          }
         }
       }
       req.open("GET", val, true);
@@ -141,7 +145,11 @@
         let val = postInput.value.charAt(0) === '/' ? postInput.value : '/'+postInput.value;
         req.onreadystatechange = () => {
           if (req.readyState === 4) {
-            postResponse.innerHTML = req.response;
+            if (req.status === 200) {
+              postResponse.innerHTML = req.response;
+            } else {
+              postResponse.innerHTML = 'There was an error with your server. Try to reboot it :)';
+            }
           }
         }
         req.open("POST", val, true);
@@ -157,7 +165,11 @@
           let val = putInput.value.charAt(0) === '/' ? putInput.value : '/'+putInput.value;
           req.onreadystatechange = () => {
             if (req.readyState === 4) {
-              putResponse.innerHTML = req.response;
+              if (req.status === 200) {
+                putResponse.innerHTML = req.response;
+              } else {
+                putResponse.innerHTML = 'There was an error with your server. Try to reboot it :)';
+              }
             }
           }
           req.open("PUT", val, true);
@@ -173,7 +185,11 @@
             let val = deleteInput.value.charAt(0) === '/' ? deleteInput.value : '/'+deleteInput.value;
             req.onreadystatechange = () => {
               if (req.readyState === 4) {
-                deleteResponse.innerHTML = req.response;
+                if (req.status === 200) {
+                  deleteResponse.innerHTML = req.response;
+                } else {
+                  deleteResponse.innerHTML = 'There was an error with your server. Try to reboot it :)';
+                }
               }
             }
             req.open("DELETE", val, true);
