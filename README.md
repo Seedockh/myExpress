@@ -34,7 +34,7 @@ https://github.com/makiboto/myExpress
 ## ⚙️ Start project
 
 ```console
-$ npm install && npm start
+npm install && npm start
 ```
 
 
